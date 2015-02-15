@@ -5,7 +5,7 @@ namespace Tulpep.Integritul.ViewModels
     {
         public ShellViewModel()
         {
-            base.DisplayName = "Signtul Active Directory Sync";
+            base.DisplayName = "Tulpep Integritul";
             ChangeScreen(new HomeViewModel());
         }
 
