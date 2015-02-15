@@ -2,6 +2,7 @@ namespace Tulpep.Integritul {
     using System;
     using System.Collections.Generic;
     using Caliburn.Micro;
+    using Tulpep.Integritul.ViewModels;
 
     public class AppBootstrapper : BootstrapperBase {
         SimpleContainer container;
