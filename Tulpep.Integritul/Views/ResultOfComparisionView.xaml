@@ -6,15 +6,13 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
-    <Grid Name="MainGrid" Margin="0,0,0,0">
-        <StackPanel>
-            <TextBlock Opacity="0.8"  FontSize="22" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="50,40,50,40" Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center">
+    <Grid>
+        <TextBlock Opacity="0.8"  FontSize="20" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="0,20,0,20" Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center" Width="617">
                 Here are the results of your comparison per every file in the folder
-            </TextBlock>
-            <Button x:Name="Home" Content="{StaticResource appbar_home_empty}" ToolTip="Home" Style="{DynamicResource MetroCircleButtonStyle}" Width="100" Height="100" Margin="0,0,0,0"/>
+        </TextBlock>
             <DataGrid ItemsSource="{Binding ResultList}" 
               CanUserReorderColumns="True" CanUserResizeColumns="True" 
-              CanUserResizeRows="False" CanUserSortColumns="True" Margin="30,0,30,0"/>
-        </StackPanel>
+              CanUserResizeRows="False" CanUserSortColumns="True" Margin="30,70,30,91"/>
+        <Button x:Name="Home" Content="Go Back" ToolTip="Home" Width="200" Height="50" Margin="303,0,297,20" VerticalAlignment="Bottom"/>
     </Grid>
 </UserControl>
