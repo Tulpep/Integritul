@@ -16,5 +16,11 @@ namespace Tulpep.Integritul.ViewModels
         {
             ResultList = result;
         }
+
+        public void Home()
+        {
+            IShell shell = IoC.Get<IShell>();
+            shell.ChangeScreen(new HomeViewModel());
+        }
     }
 }

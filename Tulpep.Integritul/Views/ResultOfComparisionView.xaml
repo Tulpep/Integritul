@@ -11,6 +11,7 @@
             <TextBlock Opacity="0.8"  FontSize="22" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="50,40,50,40" Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center">
                 Here are the results of your comparison per every file in the folder
             </TextBlock>
+            <Button x:Name="Home" Content="{StaticResource appbar_home_empty}" ToolTip="Home" Style="{DynamicResource MetroCircleButtonStyle}" Width="100" Height="100" Margin="0,0,0,0"/>
             <DataGrid ItemsSource="{Binding ResultList}" 
               CanUserReorderColumns="True" CanUserResizeColumns="True" 
               CanUserResizeRows="False" CanUserSortColumns="True" Margin="30,0,30,0"/>
