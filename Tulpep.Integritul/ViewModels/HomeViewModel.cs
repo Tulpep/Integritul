@@ -80,6 +80,7 @@ namespace Tulpep.Integritul.ViewModels
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
             fileDialog.DefaultExt = ".integritier";
             fileDialog.Filter = "Integritier Database Files (*.integritier)|*.integritier";
+            fileDialog.Title = "Select your integritier file";
             if (fileDialog.ShowDialog() == true)
             {
                 integrityFile = fileDialog.FileName;
