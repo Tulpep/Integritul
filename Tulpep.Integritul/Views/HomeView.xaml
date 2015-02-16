@@ -15,7 +15,7 @@
             <controls:Tile Title="Save folder status" 
                     TiltFactor="1"
                     Width="150" Height="150" 
-                    Margin="0,100,0,0" x:Name="Upload" Content="{StaticResource appbar_page_search}">
+                    Margin="0,100,0,0" x:Name="GenerateIntegrity" Content="{StaticResource appbar_page_search}">
                 <controls:Tile.Style>
                     <Style>
 
@@ -47,7 +47,7 @@
             <controls:Tile Title="Validate Integrity" 
                     TiltFactor="1"
                     Width="150" Height="150" 
-                    Margin="0,100,0,0" x:Name="Sync" Content="{StaticResource appbar_checkmark_thick}" >
+                    Margin="0,100,0,0" x:Name="CompareIntegrity" Content="{StaticResource appbar_checkmark_thick}" >
                 <controls:Tile.Style>
                     <Style>
                         <Style.Triggers>
