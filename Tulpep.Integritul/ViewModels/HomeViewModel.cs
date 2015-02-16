@@ -33,11 +33,11 @@ namespace Tulpep.Integritul.ViewModels
 
             string integrityFile;
             System.Windows.Forms.SaveFileDialog saveDialog = new System.Windows.Forms.SaveFileDialog();
-            saveDialog.Filter = "Integritier Database Files (*.integritier)|*.integritier";
-            saveDialog.DefaultExt = "integritier";
-            saveDialog.FileName = "IntegritierDatabase";
+            saveDialog.Filter = "Integritul Database Files (*.integritul)|*.integritul";
+            saveDialog.DefaultExt = "integritul";
+            saveDialog.FileName = "IntegritulDatabase";
             saveDialog.ValidateNames = true;
-            saveDialog.Title = "Select where you want to save the integrity file";
+            saveDialog.Title = "Select where you want to save the integritul file";
             if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 integrityFile = saveDialog.FileName;
@@ -79,9 +79,9 @@ namespace Tulpep.Integritul.ViewModels
 
             string integrityFile;
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-            fileDialog.DefaultExt = ".integritier";
-            fileDialog.Filter = "Integritier Database Files (*.integritier)|*.integritier";
-            fileDialog.Title = "Select your integritier file";
+            fileDialog.DefaultExt = ".integritul";
+            fileDialog.Filter = "Integritul Database Files (*.integritul)|*.integritul";
+            fileDialog.Title = "Select your integritul file";
             if (fileDialog.ShowDialog() == true)
             {
                 integrityFile = fileDialog.FileName;
