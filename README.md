@@ -5,4 +5,6 @@ First, you can choose any folder to generate a very very small .integritul file 
 
 Then, you compare your folder or unity with the generated .integritul file and Integritul will show you the differences between the saved and current folder status. It will show which files have been deleted, added or modified and their respective path. 
 
+![Screenshot](Images/integritul.gif)
+
 ##[Download latest version](https://github.com/Tulpep/Integritul/releases/latest)
