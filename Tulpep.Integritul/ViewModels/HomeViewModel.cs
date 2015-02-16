@@ -152,9 +152,6 @@ namespace Tulpep.Integritul.ViewModels
                 differences.Add(new ResultOfComparision { FilePath = entry.Key, Status = "Deleted" });
             }
 
-            IShell shell = IoC.Get<IShell>();
-            shell.ChangeScreen(new ResultOfComparisionViewModel(differences));
-
             return differences;
         }
 
