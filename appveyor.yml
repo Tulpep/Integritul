@@ -26,7 +26,7 @@ assembly_info:
 
 environment:
   sign_tool: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe'
-  artifact_path: 'C:\projects\Integritul\Tulpep.Integritul\bin\Release\Tulpep.Integritul.exe'
+  artifact_path: 'C:\projects\Integritul\Tulpep.Integritul\bin\Release\Integritul.exe'
   timestamp_url: http://timestamp.verisign.com/scripts/timstamp.dll
   pfx_file: 'C:\projects\Integritul\tulpep.pfx'
   pfx_password:
@@ -37,15 +37,15 @@ after_build:
   - cmd: '"%sign_tool%" sign /f "%pfx_file%" /p %pfx_password% /t %timestamp_url% "%artifact_path%"'
 
 artifacts:
-  - path: '**\bin\Release\Tulpep.Integritul.exe'
-    name: Tulpep.Integritul.exe
+  - path: '**\bin\Release\Integritul.exe'
+    name: Integritul.exe
 
 deploy:
   release: Integritul-v$(appveyor_build_version)
   provider: GitHub
   auth_token:
     secure: ssdN9jwfliKlofAxdzvwHAd7QHhsiBG14a5IUwmd28I9f3aolEYj4sGCXceoggw1
-  artifact: Tulpep.Integritul.exe
+  artifact: Integritul.exe
   draft: false
   prerelease: false
   on:
