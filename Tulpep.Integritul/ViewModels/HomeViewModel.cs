@@ -8,6 +8,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Linq;
 
 namespace Tulpep.Integritul.ViewModels
 {
@@ -76,34 +77,37 @@ namespace Tulpep.Integritul.ViewModels
             }
 
             string integrityFile;
-            System.Windows.Forms.SaveFileDialog saveDialog = new System.Windows.Forms.SaveFileDialog();
-            saveDialog.Filter = "Integritier Database Files (*.integritier)|*.integritier";
-            saveDialog.DefaultExt = "integritier";
-            saveDialog.FileName = "IntegritierDatabase";
-            saveDialog.ValidateNames = true;
-            saveDialog.Title = "Select where you want to save the integrity file";
-            if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+            fileDialog.DefaultExt = ".integritier";
+            fileDialog.Filter = "Integritier Database Files (*.integritier)|*.integritier";
+            if (fileDialog.ShowDialog() == true)
             {
-                integrityFile = saveDialog.FileName;
+                integrityFile = fileDialog.FileName;
             }
             else
             {
                 return;
             }
-
             ProgressDialogController progressDialog = await ShowProgressAsync("Please Wait", String.Empty);
             var progressHandler = new Progress<string>(value =>
             {
                 progressDialog.SetMessage(value);
             });
             var progress = progressHandler as IProgress<string>;
+            Dictionary<string, string> differences = new Dictionary<string, string>();
             await Task.Run(() =>
             {
-                CompareFolder(folderToScan, integrityFile, progress);
+                differences = CompareFolder(folderToScan, integrityFile, progress);
             });
             await progressDialog.CloseAsync();
-            await ShowMessageAsync("Done", "Integrity file created in " + integrityFile, MessageDialogStyle.Affirmative);
-
+            if(differences.Any())
+            {
+                await ShowMessageAsync("Files Modified", "Changes!!!", MessageDialogStyle.Affirmative);
+            }
+            else
+            {
+                await ShowMessageAsync("All is equal", "Noting has changed", MessageDialogStyle.Affirmative);
+            }
         }
 
         private static void InitialStatusOfFolder(string folder, string zipFile, IProgress<string> progress)
@@ -113,35 +117,39 @@ namespace Tulpep.Integritul.ViewModels
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
-                result.Add(fileName, GetChecksum(fileName));                
+                result.Add(GetRelativePath(folder, fileName), GetChecksum(fileName));                
             }
 
             File.WriteAllText(zipFile, JsonConvert.SerializeObject(result, Formatting.Indented));
         }
-        private static void CompareFolder(string folder, string zipFile, IProgress<string> progress)
+        private static Dictionary<string, string> CompareFolder(string folder, string zipFile, IProgress<string> progress)
         {
             Dictionary<string, string> original = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(zipFile));
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            Dictionary<string, string> differences = new Dictionary<string, string>();
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
-                if(original.ContainsKey(fileName))
+                string relativePath = GetRelativePath(folder, fileName);
+                if (original.ContainsKey(relativePath))
                 {
-                    if(original[fileName] == GetChecksum(fileName))
+                    if(original[relativePath] != GetChecksum(fileName))
                     {
-                        result.Add(fileName, "Ok");
+                        differences.Add(fileName, "Changed");
                     }
-                    else
-                    {
-                        result.Add(fileName, "Changed");
-                    }
+                    original.Remove(relativePath);
                 }
                 else
                 {
-                    result.Add(fileName, "New File");
+                    differences.Add(fileName, "New File");
                 }
-
             }
+
+            foreach(var entriy in original)
+            {
+                differences.Add(entriy.Key, "Deleted");
+            }
+
+            return differences;
         }
 
         private static async Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle messageStyle)
@@ -187,5 +195,11 @@ namespace Tulpep.Integritul.ViewModels
                 return null;
             }
         }
+
+        private static string GetRelativePath(string rootPath, string fullPath)
+        {
+            return fullPath.Substring(rootPath.Length);
+        }
+
     }
 }
