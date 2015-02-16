@@ -26,7 +26,7 @@ assembly_info:
 
 environment:
   sign_tool: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe'
-  artifact_path: 'C:\projects\Integritul\Tulpep.Integritul\bin\Release\SDelete-Gui.exe'
+  artifact_path: 'C:\projects\Integritul\Tulpep.Integritul\bin\Release\Tulpep.Integritul.exe'
   timestamp_url: http://timestamp.verisign.com/scripts/timstamp.dll
   pfx_file: 'C:\projects\sdelete-gui\tulpep.pfx'
   pfx_password:
