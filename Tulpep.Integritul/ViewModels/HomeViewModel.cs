@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
+using Tulpep.Integritul.Models;
 
 namespace Tulpep.Integritul.ViewModels
 {
@@ -95,7 +96,7 @@ namespace Tulpep.Integritul.ViewModels
                 progressDialog.SetMessage(value);
             });
             var progress = progressHandler as IProgress<string>;
-            Dictionary<string, string> differences = new Dictionary<string, string>();
+            IEnumerable<ResultOfComparision> differences = new List<ResultOfComparision>();
             await Task.Run(() =>
             {
                 differences = CompareFolder(folderToScan, integrityFile, progress);
@@ -103,7 +104,8 @@ namespace Tulpep.Integritul.ViewModels
             await progressDialog.CloseAsync();
             if(differences.Any())
             {
-                await ShowMessageAsync("Files Modified", "Changes!!!", MessageDialogStyle.Affirmative);
+                IShell shell = IoC.Get<IShell>();
+                shell.ChangeScreen(new ResultOfComparisionViewModel(differences));
             }
             else
             {
@@ -123,10 +125,10 @@ namespace Tulpep.Integritul.ViewModels
 
             File.WriteAllText(zipFile, JsonConvert.SerializeObject(result, Formatting.Indented));
         }
-        private static Dictionary<string, string> CompareFolder(string folder, string zipFile, IProgress<string> progress)
+        private static IEnumerable<ResultOfComparision> CompareFolder(string folder, string zipFile, IProgress<string> progress)
         {
             Dictionary<string, string> original = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(zipFile));
-            Dictionary<string, string> differences = new Dictionary<string, string>();
+            List<ResultOfComparision> differences = new List<ResultOfComparision>();
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
@@ -135,20 +137,23 @@ namespace Tulpep.Integritul.ViewModels
                 {
                     if(original[relativePath] != GetChecksum(fileName))
                     {
-                        differences.Add(fileName, "Changed");
+                        differences.Add(new ResultOfComparision { FilePath = fileName, Status = "Modified"});
                     }
                     original.Remove(relativePath);
                 }
                 else
                 {
-                    differences.Add(fileName, "New File");
+                    differences.Add(new ResultOfComparision { FilePath = fileName, Status = "New File"});
                 }
             }
 
-            foreach(var entriy in original)
+            foreach(var entry in original)
             {
-                differences.Add(entriy.Key, "Deleted");
+                differences.Add(new ResultOfComparision { FilePath = entry.Key, Status = "Deleted" });
             }
+
+            IShell shell = IoC.Get<IShell>();
+            shell.ChangeScreen(new ResultOfComparisionViewModel(differences));
 
             return differences;
         }

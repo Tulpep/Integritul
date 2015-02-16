@@ -16,7 +16,7 @@ namespace Tulpep.Integritul {
 
             container.Singleton<IWindowManager, WindowManager>();
             container.Singleton<IEventAggregator, EventAggregator>();
-            container.PerRequest<IShell, ShellViewModel>();
+            container.Singleton<IShell, ShellViewModel>();
         }
 
         protected override object GetInstance(Type service, string key) {
