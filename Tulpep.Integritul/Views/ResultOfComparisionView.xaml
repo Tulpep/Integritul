@@ -7,8 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid Name="MainGrid" Margin="0,0,0,0">
-        <DataGrid ItemsSource="{Binding ResultList}" 
-          CanUserReorderColumns="True" CanUserResizeColumns="True" 
-          CanUserResizeRows="False" CanUserSortColumns="True"/>
+        <StackPanel>
+            <TextBlock Opacity="0.7"  FontSize="16" TextAlignment="Justify" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="50,40,50,0">
+                Here are the results of your comparison per every file
+            </TextBlock>
+            <DataGrid ItemsSource="{Binding ResultList}" 
+              CanUserReorderColumns="True" CanUserResizeColumns="True" 
+              CanUserResizeRows="False" CanUserSortColumns="True"/>
+        </StackPanel>
     </Grid>
 </UserControl>

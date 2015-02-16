@@ -27,7 +27,7 @@
                     </Style>
                 </controls:Tile.Style>
             </controls:Tile>
-            <TextBlock Opacity="0.7"  FontSize="16" TextAlignment="Justify" TextWrapping="Wrap" x:Name="ActiveDirectoryText" Margin="50,40,50,0">
+            <TextBlock Opacity="0.7"  FontSize="16" TextAlignment="Justify" TextWrapping="Wrap" x:Name="SaveStatusText" Margin="50,40,50,0">
                 Scan a folder and save an integrity file for later validation.
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
