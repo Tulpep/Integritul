@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tulpep.Integritul.Models
 {
-    public class ResultOfComparision
+    public class ResultOfComparison
     {
         public string FilePath { get; set; }
         public string Status { get; set; }

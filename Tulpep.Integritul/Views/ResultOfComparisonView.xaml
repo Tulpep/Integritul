@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
-        <TextBlock Opacity="0.8"  FontSize="20" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="0,20,0,20" Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center" Width="617">
+        <TextBlock Opacity="0.8"  FontSize="20" TextWrapping="Wrap" x:Name="ResultsTitle" Margin="92,20,92,0" Foreground="Black" HorizontalAlignment="Center" TextAlignment="Center" Width="616" Height="560" VerticalAlignment="Top">
                 Here are the results of your comparison per every file in the folder
         </TextBlock>
-            <DataGrid ItemsSource="{Binding ResultList}" 
+        <DataGrid ItemsSource="{Binding ResultList}" 
               CanUserReorderColumns="True" CanUserResizeColumns="True" 
               CanUserResizeRows="False" CanUserSortColumns="True" Margin="30,70,30,91"/>
         <Button x:Name="Home" Content="Go Back" ToolTip="Home" Width="200" Height="50" Margin="303,0,297,20" VerticalAlignment="Bottom"/>

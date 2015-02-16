@@ -96,7 +96,7 @@ namespace Tulpep.Integritul.ViewModels
                 progressDialog.SetMessage(value);
             });
             var progress = progressHandler as IProgress<string>;
-            IEnumerable<ResultOfComparision> differences = new List<ResultOfComparision>();
+            IEnumerable<ResultOfComparison> differences = new List<ResultOfComparison>();
             await Task.Run(() =>
             {
                 differences = CompareFolder(folderToScan, integrityFile, progress);
@@ -105,7 +105,7 @@ namespace Tulpep.Integritul.ViewModels
             if(differences.Any())
             {
                 IShell shell = IoC.Get<IShell>();
-                shell.ChangeScreen(new ResultOfComparisionViewModel(differences));
+                shell.ChangeScreen(new ResultOfComparisonViewModel(differences));
             }
             else
             {
@@ -125,10 +125,10 @@ namespace Tulpep.Integritul.ViewModels
 
             File.WriteAllText(zipFile, JsonConvert.SerializeObject(result, Formatting.Indented));
         }
-        private static IEnumerable<ResultOfComparision> CompareFolder(string folder, string zipFile, IProgress<string> progress)
+        private static IEnumerable<ResultOfComparison> CompareFolder(string folder, string zipFile, IProgress<string> progress)
         {
             Dictionary<string, string> original = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(zipFile));
-            List<ResultOfComparision> differences = new List<ResultOfComparision>();
+            List<ResultOfComparison> differences = new List<ResultOfComparison>();
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
@@ -137,19 +137,19 @@ namespace Tulpep.Integritul.ViewModels
                 {
                     if(original[relativePath] != GetChecksum(fileName))
                     {
-                        differences.Add(new ResultOfComparision { FilePath = fileName, Status = "Modified"});
+                        differences.Add(new ResultOfComparison { FilePath = fileName, Status = "Modified"});
                     }
                     original.Remove(relativePath);
                 }
                 else
                 {
-                    differences.Add(new ResultOfComparision { FilePath = fileName, Status = "New File"});
+                    differences.Add(new ResultOfComparison { FilePath = fileName, Status = "New File"});
                 }
             }
 
             foreach(var entry in original)
             {
-                differences.Add(new ResultOfComparision { FilePath = entry.Key, Status = "Deleted" });
+                differences.Add(new ResultOfComparison { FilePath = entry.Key, Status = "Deleted" });
             }
 
             return differences;

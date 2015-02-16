@@ -8,11 +8,11 @@ using Tulpep.Integritul.Models;
 
 namespace Tulpep.Integritul.ViewModels
 {
-    public class ResultOfComparisionViewModel : Screen
+    public class ResultOfComparisonViewModel : Screen
     {
-        public IEnumerable<ResultOfComparision> ResultList { get; set; } 
+        public IEnumerable<ResultOfComparison> ResultList { get; set; } 
 
-        public ResultOfComparisionViewModel(IEnumerable<ResultOfComparision> result)
+        public ResultOfComparisonViewModel(IEnumerable<ResultOfComparison> result)
         {
             ResultList = result;
         }
