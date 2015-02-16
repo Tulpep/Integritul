@@ -33,7 +33,7 @@
                     <Style TargetType="TextBlock">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=Upload, Path=IsMouseOver}" Value="True" >
+                            <DataTrigger Binding="{Binding ElementName=GenerateIntegrity, Path=IsMouseOver}" Value="True" >
                                 <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -64,7 +64,7 @@
                     <Style TargetType="TextBlock">
                         <Setter Property="Visibility" Value="Collapsed" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=Sync, Path=IsMouseOver}" Value="True" >
+                            <DataTrigger Binding="{Binding ElementName=CompareIntegrity, Path=IsMouseOver}" Value="True" >
                                 <Setter Property="Visibility" Value="Visible" />
                             </DataTrigger>
                         </Style.Triggers>
