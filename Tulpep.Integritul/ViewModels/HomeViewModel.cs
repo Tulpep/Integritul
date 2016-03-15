@@ -115,31 +115,37 @@ namespace Tulpep.Integritul.ViewModels
 
         private static void InitialStatusOfFolder(string folder, string zipFile, IProgress<string> progress)
         {
-            Dictionary<string, string> result = new Dictionary<string, string>();
+            List<Result> result = new List<Result>();
 
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
-                result.Add(GetRelativePath(folder, fileName), GetChecksum(fileName));                
+                result.Add(
+                    new Result {
+                        FileName = GetRelativePath(folder, fileName),
+                        Checksum = GetChecksum(fileName),
+                        Permissions = "AAAAA"
+                    });
             }
 
             File.WriteAllText(zipFile, JsonConvert.SerializeObject(result, Formatting.Indented));
         }
         private static IEnumerable<ResultOfComparison> CompareFolder(string folder, string zipFile, IProgress<string> progress)
         {
-            Dictionary<string, string> original = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(zipFile));
+            List<Result> original = JsonConvert.DeserializeObject<List<Result>>(File.ReadAllText(zipFile));
             List<ResultOfComparison> differences = new List<ResultOfComparison>();
             foreach (var fileName in Directory.EnumerateFiles(folder, "*.*", SearchOption.AllDirectories))
             {
                 progress.Report(fileName);
                 string relativePath = GetRelativePath(folder, fileName);
-                if (original.ContainsKey(relativePath))
+                var originalFile = original.FirstOrDefault(x => x.FileName == relativePath);
+                if (originalFile != null)
                 {
-                    if(original[relativePath] != GetChecksum(fileName))
+                    if(originalFile.Checksum != GetChecksum(fileName))
                     {
                         differences.Add(new ResultOfComparison { FilePath = fileName, Status = "Modified"});
                     }
-                    original.Remove(relativePath);
+                    original.Remove(originalFile);
                 }
                 else
                 {
@@ -149,7 +155,7 @@ namespace Tulpep.Integritul.ViewModels
 
             foreach(var entry in original)
             {
-                differences.Add(new ResultOfComparison { FilePath = entry.Key, Status = "Deleted" });
+                differences.Add(new ResultOfComparison { FilePath = entry.FileName, Status = "Deleted" });
             }
 
             return differences;
