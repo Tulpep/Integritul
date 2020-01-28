@@ -28,9 +28,9 @@ environment:
   sign_tool: 'C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe'
   artifact_path: 'C:\projects\Integritul\Tulpep.Integritul\bin\Release\Integritul.exe'
   timestamp_url: http://timestamp.verisign.com/scripts/timstamp.dll
-  pfx_file: 'C:\projects\Integritul\tulpep.pfx'
+  pfx_file: 'C:\projects\Integritul\CodeSigningCertificate.pfx'
   pfx_password:
-    secure: LdcyoQhXm2P2QuFz/ogRYpACnJeZDyka/QBzMKJkKKE=
+    secure: ugchYa6faIXJ4MAlCLsu0AT1uu5hh4YoV3qa3jJdBr4=
 
 
 after_build:
